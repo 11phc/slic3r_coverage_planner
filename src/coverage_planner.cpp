@@ -4,6 +4,8 @@
 
 #include "ros/ros.h"
 
+#include <boost/range/adaptor/reversed.hpp>
+
 #include "ExPolygon.hpp"
 #include "Polyline.hpp"
 #include "Fill/FillRectilinear.hpp"
@@ -188,7 +190,7 @@ createMarkers(const slic3r_coverage_planner::PlanPathRequest &planning_request,
 }
 
 void traverse(std::vector<PerimeterGeneratorLoop> &contours, std::vector<Polygons> &line_groups) {
-    for (auto &contour: contours) {
+    for (auto &contour: boost::adaptors::reverse(contours)) {
         if (contour.children.empty()) {
             line_groups.push_back(Polygons());
         } else {
